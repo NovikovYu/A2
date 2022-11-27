@@ -1,6 +1,6 @@
 import uniqid from 'uniqid'
 
-import classes from '../app/app.module.scss'
+import classes from '../../styles/app.module.scss'
 import Row from '../row/row'
 
 const Ticket = (props) => {

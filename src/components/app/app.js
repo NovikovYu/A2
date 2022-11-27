@@ -8,15 +8,16 @@ import StopsFilter from '../stopsFilter/stopsFilter'
 import LoadingSpiner from '../loader/loader'
 import NoResultsBanner from '../noResultsBanner/noResultsBanner'
 import { loadMoreTickets } from '../../redux/actions'
-
-import classes from './app.module.scss'
-import Logo from './logo.png'
+import Logo from '../../images/logo.png'
+import classes from '../../styles/app.module.scss'
 
 const App = () => {
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(loadMoreTickets())
   }, [])
+
   return (
     <>
       <div className={classes.header}>

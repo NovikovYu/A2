@@ -1,6 +1,6 @@
-export const inc1 = () => ({ type: 'INC1' })
-export const inc2 = () => ({ type: 'INC2' })
-export const inc3 = () => ({ type: 'INC3' })
+export const switchCheapestFilter = () => ({ type: 'SWITCH_CHEAPEST_FILTER' })
+export const switchFastestFilter = () => ({ type: 'SWITCH_FASTEST_FILTER' })
+export const switchOptimalFilter = () => ({ type: 'SWITCH_OPTIMAL_FILTER' })
 export const showMoreTickets = () => ({ type: 'ADD_TICKETS' })
 export const checkStopAll = () => ({ type: 'CHECK_STOP_ALL' })
 export const checkStop0 = () => ({ type: 'CHECK_STOP_0' })
@@ -15,7 +15,7 @@ export const loadMoreTickets = () => {
       dispatch(loaderOn())
 
       // получаем ключ
-      const responseKey = await fetch('https://front-test.dev.aviasales.ru/search')
+      const responseKey = await fetch('https://aviasales-test-api.kata.academy/search')
       const key = await responseKey.json()
 
       // запрос
@@ -26,7 +26,7 @@ export const loadMoreTickets = () => {
 
         try {
           // отправляем запрос
-          request = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${key.searchId}`)
+          request = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${key.searchId}`)
 
           if (request.ok) {
             // если ответ нормальный, то извлекаем билеты,
@@ -41,14 +41,12 @@ export const loadMoreTickets = () => {
           if (request.stop) {
             dispatch(loaderOff())
           }
-          // dispatch(loaderOff())
-          // throw new Error('Точно ошибка при загрузке', err)
         }
 
         // если ответ норм, прокидываем его в редьюсер
         if (response) {
           dispatch({
-            type: 'LMT',
+            type: 'LOAD_MORE_TICKETS',
             tickets: response,
           })
         }
@@ -63,16 +61,6 @@ export const loadMoreTickets = () => {
       loadTickets()
     } catch (err) {
       console.log('Ошибка при загрузке', err)
-      // dispatch(errorOn('Ошибка загрузки', err))
-      // dispatch(loaderOff())
     }
   }
 }
-
-// export const inc100 = () => {
-//   return (dispatch) => {
-//     setTimeout(() => {
-//       dispatch(inc3())
-//     }, 5000)
-//   }
-// }

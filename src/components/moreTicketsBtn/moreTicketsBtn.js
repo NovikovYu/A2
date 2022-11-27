@@ -1,14 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 import { showMoreTickets } from '../../redux/actions'
-
-import classes from './../app/app.module.scss'
-
-// import { useDispatch, useSelector } from 'react-redux'
+import classes from '../../styles/app.module.scss'
 
 const MoreTicketsBtn = () => {
-  // console.log('MoreTicketsBtn props >> ', props)
-  const tickets = useSelector((state) => state.tickets)
+  const tickets = useSelector((state) => state.tickets.tickets)
   const dispatch = useDispatch()
 
   const add5Tickets = () => {

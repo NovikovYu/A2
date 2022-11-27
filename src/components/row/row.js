@@ -1,4 +1,4 @@
-import classes from '../app/app.module.scss'
+import classes from '../../styles/app.module.scss'
 
 const Row = (props) => {
   let startTime = new Date(props.rowInfo.date)
@@ -19,6 +19,7 @@ const Row = (props) => {
       stopsString = `${props.rowInfo.stops.length} пересадок`
     }
   }
+
   return (
     <div className={classes['cards__ticket-row']}>
       <div className={classes['cards__ticket-info-box']}>

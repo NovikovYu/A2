@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Oval } from 'react-loader-spinner'
 
-import classes from '../app/app.module.scss'
+import classes from '../../styles/app.module.scss'
 
 const LoadingSpiner = () => {
   const loading = useSelector((state) => state.loading)

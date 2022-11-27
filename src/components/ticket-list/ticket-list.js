@@ -2,57 +2,43 @@ import { useSelector } from 'react-redux'
 import uniqid from 'uniqid'
 
 import Ticket from '../ticket/ticket'
-import classes from '../app/app.module.scss'
+import classes from '../../styles/app.module.scss'
 
 const TicketList = () => {
-  let tickets = useSelector((state) => state.tickets)
+  let tickets = useSelector((state) => state.tickets.tickets)
   let ourTickets = JSON.parse(JSON.stringify(tickets))
-  const numOfShowingTickets = useSelector((state) => state.numOfShowingTickets)
-  const sortFilterMode = useSelector((state) => state.sortFilterMode)
-  const stopAll = useSelector((state) => state.stopAll)
-  const stop0 = useSelector((state) => state.stop0)
-  const stop1 = useSelector((state) => state.stop1)
-  const stop2 = useSelector((state) => state.stop2)
-  const stop3 = useSelector((state) => state.stop3)
+  const numOfShowingTickets = useSelector((state) => state.tickets.numOfShowingTickets)
+  const sortFilterMode = useSelector((state) => state.sort.sortFilterMode)
+  const stopAll = useSelector((state) => state.stop.stopAll)
+  const stop0 = useSelector((state) => state.stop.stop0)
+  const stop1 = useSelector((state) => state.stop.stop1)
+  const stop2 = useSelector((state) => state.stop.stop2)
+  const stop3 = useSelector((state) => state.stop.stop3)
+
   // сортируем билеты в зависимости от количества пересадок
   let sortedTickets = []
+
+  // показываем все билеты
   if (stopAll) {
-    sortedTickets = ourTickets.filter((ticket) => 0 <= ticket.segments[0].stops.length <= 3)
-  } else if (stop0 && stop1) {
-    sortedTickets = ourTickets.filter(
-      (ticket) => ticket.segments[0].stops.length === 0 || ticket.segments[0].stops.length === 1
-    )
-  } else if (stop0 && stop2) {
-    sortedTickets = ourTickets.filter(
-      (ticket) => ticket.segments[0].stops.length === 0 || ticket.segments[0].stops.length === 2
-    )
-  } else if (stop0 && stop3) {
-    sortedTickets = ourTickets.filter(
-      (ticket) => ticket.segments[0].stops.length === 0 || ticket.segments[0].stops.length === 3
-    )
-  } else if (stop1 && stop2) {
-    sortedTickets = ourTickets.filter(
-      (ticket) => ticket.segments[0].stops.length === 1 || ticket.segments[0].stops.length === 2
-    )
-  } else if (stop1 && stop3) {
-    sortedTickets = ourTickets.filter(
-      (ticket) => ticket.segments[0].stops.length === 1 || ticket.segments[0].stops.length === 3
-    )
-  } else if (stop2 && stop3) {
-    sortedTickets = ourTickets.filter(
-      (ticket) => ticket.segments[0].stops.length === 2 || ticket.segments[0].stops.length === 3
-    )
-  } else if (stop0) {
-    sortedTickets = ourTickets.filter((ticket) => ticket.segments[0].stops.length === 0)
-  } else if (stop1) {
-    sortedTickets = ourTickets.filter((ticket) => ticket.segments[0].stops.length === 1)
-  } else if (stop2) {
-    sortedTickets = ourTickets.filter((ticket) => ticket.segments[0].stops.length === 2)
-  } else if (stop3) {
-    sortedTickets = ourTickets.filter((ticket) => ticket.segments[0].stops.length === 3)
+    sortedTickets = ourTickets
   }
-  // отрезаем часть билетов, которую покажем
-  let shortTickets = sortedTickets.slice(0, numOfShowingTickets)
+  // к показываем билетам добавляем билеты с 0 пересадок
+  if (stop0) {
+    sortedTickets = [...ourTickets.filter((ticket) => ticket.segments[0].stops.length === 0), ...sortedTickets]
+  }
+  // к показываем билетам добавляем билеты с 1 пересадокой
+  if (stop1) {
+    sortedTickets = [...ourTickets.filter((ticket) => ticket.segments[0].stops.length === 1), ...sortedTickets]
+  }
+  // к показываем билетам добавляем билеты с 2 пересадками
+  if (stop2) {
+    sortedTickets = [...ourTickets.filter((ticket) => ticket.segments[0].stops.length === 2), ...sortedTickets]
+  }
+  // к показываем билетам добавляем билеты с 3 пересадками
+  if (stop3) {
+    sortedTickets = [...ourTickets.filter((ticket) => ticket.segments[0].stops.length === 3), ...sortedTickets]
+  }
+
   // сортируем билеты в зависимости от верхнего фильтра
   function comparePrice(a, b) {
     if (a.price < b.price) {
@@ -82,12 +68,16 @@ const TicketList = () => {
     return 0
   }
   if (sortFilterMode === 1) {
-    shortTickets = shortTickets.sort(comparePrice)
+    sortedTickets = sortedTickets.sort(comparePrice)
   } else if (sortFilterMode === 2) {
-    shortTickets = shortTickets.sort(compareTime)
+    sortedTickets = sortedTickets.sort(compareTime)
   } else if (sortFilterMode === 3) {
-    shortTickets = shortTickets.sort(compareOurCommission)
+    sortedTickets = sortedTickets.sort(compareOurCommission)
   }
+
+  // отрезаем часть билетов, которую покажем
+  let shortTickets = sortedTickets.slice(0, numOfShowingTickets)
+
   const ticketListContent = shortTickets.map((ticketInfo) => {
     return <Ticket ticketInfo={ticketInfo} key={uniqid()} />
   })

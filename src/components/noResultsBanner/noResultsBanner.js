@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import classes from './../app/app.module.scss'
+import classes from '../../styles/app.module.scss'
 
 const NoResultsBanner = () => {
   const [isVisible, setIsVisible] = useState(true)
-  const isCheckedFilterAll = useSelector((state) => state.stopAll)
-  const isCheckedFilter0 = useSelector((state) => state.stop0)
-  const isCheckedFilter1 = useSelector((state) => state.stop1)
-  const isCheckedFilter2 = useSelector((state) => state.stop2)
-  const isCheckedFilter3 = useSelector((state) => state.stop3)
+  const isCheckedFilterAll = useSelector((state) => state.stop.stopAll)
+  const isCheckedFilter0 = useSelector((state) => state.stop.stop0)
+  const isCheckedFilter1 = useSelector((state) => state.stop.stop1)
+  const isCheckedFilter2 = useSelector((state) => state.stop.stop2)
+  const isCheckedFilter3 = useSelector((state) => state.stop.stop3)
+
   useEffect(() => {
     if (isCheckedFilterAll || isCheckedFilter0 || isCheckedFilter1 || isCheckedFilter2 || isCheckedFilter3) {
       setIsVisible(false)
@@ -17,6 +18,7 @@ const NoResultsBanner = () => {
       setIsVisible(true)
     }
   }, [isCheckedFilterAll, isCheckedFilter0, isCheckedFilter1, isCheckedFilter2, isCheckedFilter3])
+
   //   показываем если ни один фильтр не выбран
   if (isVisible) {
     return <p className={classes['no-results-bunner']}>Рейсов, подходящих под заданные фильтры, не найдено</p>

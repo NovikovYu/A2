@@ -1,57 +1,45 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
+import classNames from 'classnames/bind'
 
-import classes from '../app/app.module.scss'
+import classes from '../../styles/app.module.scss'
 import * as actions from '../../redux/actions'
 
-const SortFilter = ({ counter, inc1, inc2, inc3 }) => {
-  let classes1 = `${classes['price-filter__btn']}`
-  let classes2 = `${classes['price-filter__btn']}`
-  let classes3 = `${classes['price-filter__btn']}`
-  let classesActive = `${classes['price-filter__btn']} ${classes['active']}`
-  // if (counter === 2) {
-  //   classes2 = classesActive
-  // }
+let cx = classNames.bind(classes)
 
-  // console.log('counter.sortFilterMode >>', counter.sortFilterMode)
-  switch (counter.sortFilterMode) {
-    case 1:
-      classes1 = classesActive
-      break
-    case 2:
-      classes2 = classesActive
-      break
-    case 3:
-      classes3 = classesActive
-      break
-  }
+const SortFilter = ({ counter, switchCheapestFilter, switchFastestFilter, switchOptimalFilter }) => {
+  let classesForCheapestFilter = cx({
+    'price-filter__btn': true,
+    active: counter.sort.sortFilterMode === 1,
+  })
+  let classesForFastestFilter = cx({
+    'price-filter__btn': true,
+    active: counter.sort.sortFilterMode === 2,
+  })
+  let classesForOptimalFilter = cx({
+    'price-filter__btn': true,
+    active: counter.sort.sortFilterMode === 3,
+  })
 
   return (
     <ul className={classes['price-filter']}>
       <li className={classes['price-filter__item']}>
-        <button className={classes1} type="button" onClick={inc1}>
+        <button className={classesForCheapestFilter} type="button" onClick={switchCheapestFilter}>
           {counter.a} Самый дешевый
         </button>
       </li>
 
       <li className={classes['price-filter__item']}>
-        <button className={classes2} type="button" onClick={inc2}>
+        <button className={classesForFastestFilter} type="button" onClick={switchFastestFilter}>
           Самый быстрый
         </button>
       </li>
 
       <li className={classes['price-filter__item']}>
-        <button className={classes3} type="button" onClick={inc3}>
+        <button className={classesForOptimalFilter} type="button" onClick={switchOptimalFilter}>
           Оптимальный
         </button>
       </li>
-
-      {/* <li className={classes['price-filter__item']}>
-        <button className={classes3} type="button" onClick={inc100}>
-          АД100
-        </button>
-      </li> */}
     </ul>
   )
 }

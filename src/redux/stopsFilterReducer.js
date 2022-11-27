@@ -1,8 +1,4 @@
 const initialState = {
-  sortFilterMode: 1,
-  numOfShowingTickets: 5,
-  tickets: [],
-  loading: false,
   stopAll: false,
   stop0: false,
   stop1: false,
@@ -10,52 +6,8 @@ const initialState = {
   stop3: false,
 }
 
-const reducer = (state = initialState, action) => {
+const stopFilterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'INC1':
-      return {
-        ...state,
-        sortFilterMode: 1,
-      }
-
-    case 'INC2':
-      return {
-        ...state,
-        sortFilterMode: 2,
-      }
-
-    case 'INC3':
-      return {
-        ...state,
-        sortFilterMode: 3,
-      }
-
-    case 'ADD_TICKETS':
-      return {
-        ...state,
-        numOfShowingTickets: state.numOfShowingTickets + 5,
-      }
-
-    case 'LOADING_ON': {
-      return {
-        ...state,
-        loading: true,
-      }
-    }
-    case 'LOADING_OFF': {
-      return {
-        ...state,
-        loading: false,
-      }
-    }
-
-    case 'LMT': {
-      return {
-        ...state,
-        tickets: [...state.tickets, ...action.tickets.tickets],
-      }
-    }
-
     case 'CHECK_STOP_ALL': {
       if (state.stopAll) {
         return {
@@ -167,4 +119,4 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export default reducer
+export default stopFilterReducer
