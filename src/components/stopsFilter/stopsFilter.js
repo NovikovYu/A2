@@ -34,28 +34,20 @@ const StopsFilter = () => {
 
   //   отправляем изменение в глобальный стейт при клике
   const dispatch = useDispatch()
-  const checkStopOn = (e) => {
-    switch (e.target.id) {
-      case 'stopNumberAll':
-        dispatch(checkStopAll())
-        break
-      case 'stopNumber0':
-        dispatch(checkStop0())
-        break
-      case 'stopNumber1':
-        dispatch(checkStop1())
-        break
-      case 'stopNumber2':
-        dispatch(checkStop2())
-        break
-      case 'stopNumber3':
-        dispatch(checkStop3())
-        break
-    }
+  const checkAllStop = () => {
+    dispatch(checkStopAll())
+  }
+  const check0Stop = () => {
+    dispatch(checkStop0())
+  }
+  const check1Stop = () => {
     dispatch(checkStop1())
   }
-  const l = () => {
-    console.log('')
+  const check2Stop = () => {
+    dispatch(checkStop2())
+  }
+  const check3Stop = () => {
+    dispatch(checkStop3())
   }
 
   return (
@@ -63,30 +55,25 @@ const StopsFilter = () => {
       <div className={classes.filter}>
         <span className={classes['filter__title']}> Количество пересадок </span>
 
-        <label className={`${classes['check']} ${classes['filter__check']}`} id="stopNumberAll" onClick={checkStopOn}>
-          <input checked={checkboxForAllStop} className={classes['check__input']} type="checkbox" onChange={l}></input>
-          <span className={classes['check__box']}></span>
+        <label className={classes['filter__check-label']}>
+          <input type="checkbox" checked={checkboxForAllStop} onChange={checkAllStop}></input>
           Все
         </label>
-        <label className={`${classes['check']} ${classes['filter__check']}`} id="stopNumber0" onClick={checkStopOn}>
-          <input checked={checkboxFor0Stop} className={classes['check__input']} type="checkbox" onChange={l}></input>
-          <span className={classes['check__box']}></span>
-          Без пересадок
+
+        <label className={classes['filter__check-label']}>
+          <input type="checkbox" checked={checkboxFor0Stop} onChange={check0Stop}></input>Без пересадок
         </label>
 
-        <label className={`${classes['check']} ${classes['filter__check']}`} id="stopNumber1" onClick={checkStopOn}>
-          <input checked={checkboxFor1Stop} className={classes['check__input']} type="checkbox" onChange={l}></input>
-          <span className={classes['check__box']}></span> 1 пересадка
+        <label className={classes['filter__check-label']}>
+          <input type="checkbox" checked={checkboxFor1Stop} onChange={check1Stop}></input>1 пересадка
         </label>
 
-        <label className={`${classes['check']} ${classes['filter__check']}`} id="stopNumber2" onClick={checkStopOn}>
-          <input checked={checkboxFor2Stop} className={classes['check__input']} type="checkbox" onChange={l}></input>
-          <span className={classes['check__box']}></span>2 пересадки
+        <label className={classes['filter__check-label']}>
+          <input type="checkbox" checked={checkboxFor2Stop} onChange={check2Stop}></input>2 пересадки
         </label>
 
-        <label className={`${classes['check']} ${classes['filter__check']}`} id="stopNumber3" onClick={checkStopOn}>
-          <input checked={checkboxFor3Stop} className={classes['check__input']} type="checkbox" onChange={l}></input>
-          <span className={classes['check__box']}></span>3 пересадки
+        <label className={classes['filter__check-label']}>
+          <input type="checkbox" checked={checkboxFor3Stop} onChange={check3Stop}></input>3 пересадки
         </label>
       </div>
     </>

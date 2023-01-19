@@ -85,6 +85,8 @@ button {
 
 .filter {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
     width: 230px;
     padding: 20px 0;
     background: #FFFFFF;
@@ -107,6 +109,18 @@ button {
             background: #F1FCFF;
         }
     }
+
+    &__check-label {
+        display: flex;
+        // align-items: center;
+        padding: 5px 20px;
+
+        & input {
+            width: 13px;
+            height: 13px;
+            margin-right: 10px;
+        }
+    }
 }
 
 .check {
@@ -117,16 +131,16 @@ button {
     color: #4A4A4A;
 
     &__input {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
+        // position: absolute;
+        // width: 1px;
+        // height: 1px;
+        // overflow: hidden;
+        // clip: rect(0 0 0 0);
 
-        &:checked+.check__box {
-            border: 1px solid #2196F3;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.28571 8L0 4.16123L1.20857 3.0787L4.28571 5.82726L10.7914 0L12 1.09021L4.28571 8Z' fill='%232196F3'/%3E%3C/svg%3E%0A");
-        }
+        // &:checked+.check__box {
+        //     border: 1px solid #2196F3;
+        //     background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.28571 8L0 4.16123L1.20857 3.0787L4.28571 5.82726L10.7914 0L12 1.09021L4.28571 8Z' fill='%232196F3'/%3E%3C/svg%3E%0A");
+        // }
     }
 
     &__box {
@@ -162,7 +176,18 @@ button {
         width: 100%;
 
         @media(min-width: 775px) {
-            width: 33.3%;
+            width: calc( 100% / 3);
+        }
+
+        &:nth-child(1) {
+            button {
+                border-radius: 5px 0 0 5px;
+            }
+        }
+        &:nth-child(3) {
+            button {
+                border-radius: 0 5px 5px 0;
+            }
         }
     }
 
@@ -178,6 +203,7 @@ button {
         font-family: 'Open Sans', sans-serif;
         background: #FFFFFF;
         border: 1px solid #DFE5EC;
+        transition: all 0.5s;
 
         &.active {
             background-color: #2196F3;
